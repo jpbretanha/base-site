@@ -18,7 +18,7 @@ var gulp = require('gulp')
   ,inlineSource = require('gulp-inline-source')
   ,sass = require('gulp-sass');
 
-gulp.task('default', ['minify-js', 'minify-css', 'minify-html', 'useref'], function() {
+gulp.task('default', ['useref'], function() {
 	gulp.start('build-img');
 });
 
