@@ -21,8 +21,16 @@
     justify-content: space-around;
 }
 .jcfe {
-    justify-content: flex-end !important;
+    justify-content: flex-end;
 }
 .aic {
     align-items: center;
+}
+
+.aifs {
+	align-items: flex-start;
+}
+
+.aife {
+	align-items: flex-end;
 }

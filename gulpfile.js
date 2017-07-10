@@ -11,10 +11,15 @@ var gulp = require('gulp')
   ,jshintStylish = require('jshint-stylish')
   ,csslint = require('gulp-csslint')
   ,autoprefixer = require('gulp-autoprefixer')
+  ,cssnano= require('gulp-cssnano')
+  ,htmlmin = require('gulp-htmlmin')
+  ,gulpif = require('gulp-if')
+  ,useref = require('gulp-useref')
+  ,inlineSource = require('gulp-inline-source')
   ,sass = require('gulp-sass');
 
-gulp.task('default', ['copy'], function() {
-	gulp.start('build-img', 'usemin');
+gulp.task('default', ['minify-js', 'minify-css', 'minify-html', 'useref'], function() {
+	gulp.start('build-img');
 });
 
 gulp.task('copy', ['clean'], function() {
@@ -29,20 +34,50 @@ gulp.task('clean', function() {
 
 gulp.task('build-img', function() {
 
-  return gulp.src('dist/img/**/*')
-    .pipe(imagemin())
-    .pipe(gulp.dest('dist/img'));
+  return gulp.src('src/img/*')
+        .pipe(imagemin({
+            progressive: true,
+            svgoPlugins: [
+                {removeViewBox: false},
+                {cleanupIDs: false}
+            ]
+        }))
+        .pipe(gulp.dest('dist/img'));
 });
 
-gulp.task('usemin', function() {
-  return gulp.src('dist/**/*.html')
-    .pipe(usemin({
-      js: [uglify],
-      css: [autoprefixer]
-    }))
-    .pipe(gulp.dest('dist'));
+
+// minificação
+gulp.task('minify-js', function() {
+  return gulp.src('src/**/*.js')
+    .pipe(uglify())
+    .pipe(gulp.dest('dist'))
 });
 
+gulp.task('minify-css', function() {
+  return gulp.src('src/**/*.css')
+    .pipe(cssnano())
+    .pipe(gulp.dest('dist'))
+});
+
+gulp.task('minify-html', function() {
+  return gulp.src('src/*.html')
+    .pipe(htmlmin({collapseWhitespace: true}))
+    .pipe(gulp.dest('dist'))
+});
+
+/* Concatenação */
+gulp.task('useref', function () {
+    return gulp.src('src/*.html')
+        .pipe(useref())
+        .pipe(gulpif('*.html', inlineSource()))
+        .pipe(gulpif('*.html', htmlmin({collapseWhitespace: true})))
+        .pipe(gulpif('*.js', uglify()))
+        .pipe(gulpif('*.css', cssnano({safe: true})))
+        .pipe(gulp.dest('dist'));
+});
+
+
+//server
 gulp.task('server', function() {
     browserSync.init({
         server: {
