@@ -18,13 +18,18 @@ var gulp = require('gulp')
   ,inlineSource = require('gulp-inline-source')
   ,sass = require('gulp-sass');
 
-gulp.task('default', ['useref'], function() {
+gulp.task('default', ['useref', 'copyPHP'], function() {
 	gulp.start('build-img');
 });
 
 gulp.task('copy', ['clean'], function() {
 	return gulp.src('src/**/*')
 		.pipe(gulp.dest('dist'));
+});
+
+gulp.task('copyPHP', function() {
+    return gulp.src('src/php/*')
+        .pipe(gulp.dest('dist/php'));
 });
 
 gulp.task('clean', function() {
