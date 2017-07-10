@@ -1,0 +1,11 @@
+@mixin sombra-padrao {
+  -webkit-box-shadow: 0 2px 6.65px 0.35px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 6.65px 0.35px rgba(0, 0, 0, 0.3);
+}
+
+@mixin borda-arredondada($raio: 10px) {
+  -webkit-border-radius: $raio;
+  border-radius: $raio;
+}
+
+//@include sombra-padrao
