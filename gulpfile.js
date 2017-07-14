@@ -16,9 +16,11 @@ var gulp = require('gulp')
   ,gulpif = require('gulp-if')
   ,useref = require('gulp-useref')
   ,inlineSource = require('gulp-inline-source')
-  ,sass = require('gulp-sass');
+  ,sass = require('gulp-sass'),
+  babel  = require('gulp-babel'),
+  tinypng = require('gulp-tinypng');
 
-gulp.task('default', ['useref', 'copyPHP'], function() {
+gulp.task('default', ['useref','copyPHP', 'copyFonts'], function() {
 	gulp.start('build-img');
 });
 
@@ -30,6 +32,11 @@ gulp.task('copy', ['clean'], function() {
 gulp.task('copyPHP', function() {
     return gulp.src('src/php/*')
         .pipe(gulp.dest('dist/php'));
+});
+
+gulp.task('copyFonts', function() {
+    return gulp.src('src/fonts/*')
+        .pipe(gulp.dest('dist/fonts'));
 });
 
 gulp.task('clean', function() {
@@ -47,6 +54,7 @@ gulp.task('build-img', function() {
                 {cleanupIDs: false}
             ]
         }))
+        // .pipe(tinypng('2fTBYUG9ROnvcw5jclwjWsXP8n2SF_-Z'))
         .pipe(gulp.dest('dist/img'));
 });
 
@@ -54,8 +62,12 @@ gulp.task('build-img', function() {
 // minificação
 gulp.task('minify-js', function() {
   return gulp.src('src/**/*.js')
-    .pipe(uglify())
-    .pipe(gulp.dest('dist'))
+    .pipe(babel({presets: ['es2015']}))
+    .pipe(concat("all.js"))
+    .pipe(uglify({ compress: true }).on('error', function(e){
+         console.log(e);
+    }))
+    .pipe(gulp.dest('dist/js'))
 });
 
 gulp.task('minify-css', function() {
@@ -76,7 +88,11 @@ gulp.task('useref', function () {
         .pipe(useref())
         .pipe(gulpif('*.html', inlineSource()))
         .pipe(gulpif('*.html', htmlmin({collapseWhitespace: true})))
-        .pipe(gulpif('*.js', uglify()))
+        .pipe(gulpif('*.js',babel({
+            compact: false,
+            presets: [['es2015', {modules: false}]]
+        })))
+        .pipe(gulpif('*.js', uglify({ compress: false })))
         .pipe(gulpif('*.css', cssnano({safe: true})))
         .pipe(gulp.dest('dist'));
 });
@@ -95,7 +111,7 @@ gulp.task('server', function() {
     gulp.watch('src/js/**/*.js').on('change', function(event) {
         console.log("Linting " + event.path);
         gulp.src(event.path)
-            .pipe(jshint())
+            .pipe(jshint({esversion: 6}))
             .pipe(jshint.reporter(jshintStylish));
     });
 
@@ -104,10 +120,17 @@ gulp.task('server', function() {
         gulp.src(event.path)
             .pipe(csslint())
             .pipe(csslint.reporter());
+            
     }); 
 
-    gulp.watch('src/sass/imports.scss').on('change', function(event) {
-       var stream = gulp.src(event.path)
+    gulp.watch('src/img/**/*').on('change', function(event) {
+        gulp.src(event.path)
+            .pipe(tinypng('2fTBYUG9ROnvcw5jclwjWsXP8n2SF_-Z'))
+            .pipe(gulp.dest('src/img'));
+    })
+
+    gulp.watch('src/sass/*.scss').on('change', function(event) {
+       var stream = gulp.src('src/sass/*.scss')
             .pipe(sass().on('error', function(erro) {
               console.log('Sass, erro compilação: ' + erro.filename);
               console.log(erro.message);

@@ -6,21 +6,43 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="example">
   	<meta name="keywords" content="example">
-  	<meta http-equiv="Content-Language" content="pt-br">
+	<meta http-equiv="Content-Language" content="pt-br">
+	<!-- <script>document.write('<base href="' + document.location + '" />');</script> -->
 
-	<title></title>
-
-	<!-- build:css css/estilos.css -->
-		<link rel="stylesheet" href="css/styles.css">
+	<title>Arroz Brilhante</title>
+	
+	<!-- build:css css/header.css -->
+		<link rel="stylesheet" href="css/header.css">
+		<noscript><link rel="stylesheet" href="css/header.css"></noscript>
 	<!-- endbuild -->
+
+	<!-- build:remove --><noscript><!-- endbuild -->
+	<link rel="preload" href="css/estilos.css" as="style" onload="this.rel='stylesheet'">
+	<noscript><link rel="stylesheet" href="css/estilos.css"></noscript>
+	<!-- build:remove --></noscript><!-- endbuild -->
+
+
+	<noscript>
+		<!-- build:css css/estilos.css -->
+		</noscript>
+			<link rel="stylesheet" href="css/imports.css">
+		<noscript>
+		<!-- endbuild -->
+	</noscript>
+
 </head>
 <body>
+
 	
-	<!-- build:js js/all.js -->
+
+	<!-- build:js js/all.js async-->
+		<script src="js/polyfillPreload.js"></script>
 		<script src="js/jquery.min.js"></script>
 	    <script src="js/tether.min.js"></script>
 	    <script src="js/bootstrap.min.js"></script>
-	    <script src="js/jquery.mask.min.js"></script>
+		<script src="js/jquery.mask.min.js"></script>
+		<script src="js/swiper.min.js"></script>
+		<script src="js/scroll.js"></script>
     <!-- endbuild -->
 </body>
 </html>
