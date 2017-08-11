@@ -23,12 +23,12 @@ var gulp = require('gulp')
 
   
 gulp.task('default', ['useref','copyPHP', 'copyFonts'], function() {
-	gulp.start('build-img');
+  gulp.start('build-img');
 });
 
 gulp.task('copy', ['clean'], function() {
-	return gulp.src('src/**/*')
-		.pipe(gulp.dest('dist'));
+  return gulp.src('src/**/*')
+    .pipe(gulp.dest('dist'));
 });
 
 gulp.task('copyPHP', function() {
@@ -42,8 +42,8 @@ gulp.task('copyFonts', function() {
 });
 
 gulp.task('clean', function() {
-	return gulp.src('dist')
-		.pipe(clean());
+  return gulp.src('dist')
+    .pipe(clean());
 }); 
 
 gulp.task('build-img', function() {
@@ -56,7 +56,7 @@ gulp.task('build-img', function() {
                 {cleanupIDs: false}
             ]
         }))
-        .pipe(tinypng('2fTBYUG9ROnvcw5jclwjWsXP8n2SF_-Z'))
+        // .pipe(tinypng('2fTBYUG9ROnvcw5jclwjWsXP8n2SF_-Z'))
         .pipe(gulp.dest('dist/img'));
 });
 
@@ -120,8 +120,8 @@ gulp.task('server', function() {
     gulp.watch('src/css/**/*.css').on('change', function(event) {
         console.log("Linting " + event.path);
         gulp.src(event.path)
-            .pipe(csslint())
-            .pipe(csslint.reporter());
+            .pipe(csslint());
+            
             
     }); 
 
