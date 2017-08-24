@@ -1,0 +1,41 @@
+header {
+  background-color: black;
+  color: white; }
+  header a {
+    font-weight: bold;
+    padding: 0.5rem 0.5rem;
+    text-transform: uppercase;
+    color: white !important; }
+    header a:hover:not(:nth-child(2)) {
+      text-decoration: none;
+      opacity: 0.5; }
+    header a:nth-child(2) {
+      display: flex;
+      align-items: center;
+      background-color: red; }
+      header a:nth-child(2):hover {
+        text-decoration: none;
+        background-color: #cc0000; }
+
+.header .row .col-md-5 {
+  padding-top: 2rem; }
+
+.header .row:nth-child(1) {
+  padding: 1rem 0; }
+  .header .row:nth-child(1) p {
+    margin: 3rem 0;
+    text-transform: uppercase;
+    color: black; }
+
+.header .bg-red {
+  margin-top: -12%;
+  background: url("../img/fundo-vermelho.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 3rem 0; }
+  .header .bg-red p {
+    color: white;
+    font-size: 1.3rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem; }

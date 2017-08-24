@@ -132,7 +132,9 @@ gulp.task('server', function() {
     })
 
     gulp.watch('src/sass/*.scss').on('change', function(event) {
-       var stream = gulp.src('src/sass/*.scss')
+       // var stream = gulp.src('src/sass/*.scss')
+       console.log(event.path);
+       var stream = gulp.src(event.path)
             .pipe(sass().on('error', function(erro) {
               console.log('Sass, erro compilação: ' + erro.filename);
               console.log(erro.message);
