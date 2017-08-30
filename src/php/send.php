@@ -43,7 +43,7 @@ $mail->setFrom($address, $empresa);
 //Set who the message is to be sent to
 
 //usar as variaveis no lugar do email e nome
-$mail->addAddress($email, $nome);
+$mail->addAddress($address, $nome);
 //$mail->addAddress($address, 'Contato');
 //Set the subject line
 
