@@ -36,14 +36,16 @@
 	</noscript>
 	<script>
 		window.addEventListener("DOMContentLoaded", function(){
-			document.getElementById("wrapper").style.display = "block";
+            setTimeout(function() {
+                document.getElementById("wrapper").style.display = "block";
+            }, 500);
 		});
 	</script>
 
 </head>
 <body>
 
-	<div id="wrapper" style="display: none; background:#e0e0e0;">
+	<div id="wrapper" style="display: none; z-index:999">
 
 	</div>
 
