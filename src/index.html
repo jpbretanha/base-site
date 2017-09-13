@@ -34,11 +34,18 @@
 		<noscript>
 		<!-- endbuild -->
 	</noscript>
+	<script>
+		window.addEventListener("DOMContentLoaded", function(){
+			document.getElementById("wrapper").style.display = "block";
+		});
+	</script>
 
 </head>
 <body>
 
-	
+	<div id="wrapper" style="display: none; background:#e0e0e0;">
+
+	</div>
 
 	<!-- build:js js/all.js async-->
 		<script src="js/polyfillPreload.js"></script>
