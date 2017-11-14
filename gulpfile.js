@@ -21,7 +21,7 @@ var gulp = require('gulp')
   tinypng = require('gulp-tinypng');
 
 
-  
+
 gulp.task('default', ['useref','copyPHP', 'copyFonts'], function() {
   gulp.start('build-img');
 });
@@ -44,7 +44,7 @@ gulp.task('copyFonts', function() {
 gulp.task('clean', function() {
   return gulp.src('dist')
     .pipe(clean());
-}); 
+});
 
 gulp.task('build-img', function() {
 
@@ -121,9 +121,9 @@ gulp.task('server', function() {
         console.log("Linting " + event.path);
         gulp.src(event.path)
             .pipe(csslint());
-            
-            
-    }); 
+
+
+    });
 
     gulp.watch('src/img/**/*').on('change', function(event) {
         gulp.src(event.path)
@@ -134,11 +134,11 @@ gulp.task('server', function() {
     gulp.watch('src/sass/*.scss').on('change', function(event) {
        // var stream = gulp.src('src/sass/*.scss')
        console.log(event.path);
-       var stream = gulp.src(event.path)
+       var stream = gulp.src('src/sass/*.scss')
             .pipe(sass().on('error', function(erro) {
               console.log('Sass, erro compilação: ' + erro.filename);
               console.log(erro.message);
             }))
             .pipe(gulp.dest('src/css'));
-    });   
+    });
 });
